@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-a
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/your/repo.git
+    targetRevision: HEAD
+    path: overlays/a-ns
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: a-ns
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

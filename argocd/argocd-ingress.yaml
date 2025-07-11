@@ -1,0 +1,23 @@
+# argocd-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress 
+  namespace: argocd 
+  annotations:
+    #ArgoCD 내부적으로 HTTPS로만 리스닝하므로 필수
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" 
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: argocd-nams.tanzu.lab
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server 
+                port:
+                  number: 443
+
